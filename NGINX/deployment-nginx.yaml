@@ -1,0 +1,23 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: nginx-deployment
+  labels:
+    role: nginx
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      role: nginx
+  template:
+    metadata:
+      labels:
+        role: nginx
+    spec:
+      containers:
+        - name: nginx-container
+          image: miahljnh/nginx
+          lifecycle:
+            preStop:
+              exec:
+                command: ["/usr/sbin/nginx","-s","quit"]
